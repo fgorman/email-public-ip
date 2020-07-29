@@ -1,7 +1,9 @@
 __author__ = "Foster Gorman"
 
-import requests, smtplib
+import requests
+import smtplib
 import argparse
+import re
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -15,12 +17,18 @@ from_email = args.from_email
 to_email = args.from_email
 token = args.token
 
+from_email_regex = r'[\w_.]+@gmail.com$'
+to_email_regex = r'[\w_.]+@([\w-]+.)+[a-zA-Z]{2,4}$'
+
+if not re.match(from_email_regex, from_email):
+    print('Invalid from email address. Currently only supporting Gmail.')
+    exit()
+
 if args.to_email:
     to_email = args.to_email
-
-if from_email[-9:] != 'gmail.com':
-    print('Sorry. Only gmail is currently supported for the sending email address')
-    exit()
+    if not re.match(to_email_regex, to_email):
+        print("Invalid to email address format.")
+        exit()
 
 while True:
     current_time = str(datetime.now())
