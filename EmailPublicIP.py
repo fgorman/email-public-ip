@@ -4,8 +4,6 @@ import requests, smtplib
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-print("EmailPublicIP.py is running")
-
 while True:
     current_time = str(datetime.now())
     current_time = current_time[11:22]
@@ -24,8 +22,6 @@ while True:
         msg = "Your public IP at home is {0}".format(public_ip)
         mail_server.sendmail("mh337.fg@gmail.com", "mh337.fg@gmail.com", msg)
         mail_server.quit()
-
-        print("Email was sent")
 
 
 # <span id="priceblock_ourprice" class="a-size-medium a-color-price">$137.19</span>
