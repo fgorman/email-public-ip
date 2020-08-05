@@ -30,20 +30,29 @@ if args.to_email:
         print("Invalid to email address format.")
         exit()
 
+request = requests.get("http://whatismyip.host/")
+content = request.content
+soup = BeautifulSoup(content, "html.parser")
+element = soup.find("p", {"class": "ipaddress"})
+public_ip = element.text.strip()
+
 while True:
     current_time = str(datetime.now())
     current_time = current_time[11:22]
 
-    if current_time == "07:00:00.00" or current_time == "12:00:00.00":
+    request = requests.get("http://whatismyip.host/")
+    content = request.content
+    soup = BeautifulSoup(content, "html.parser")
+    element = soup.find("p", {"class": "ipaddress"})
+    current_public_ip = element.text.strip()
+
+    if current_time == "07:00:00.00" or current_public_ip != public_ip:
+
+        public_ip = current_public_ip
+
         mail_server = smtplib.SMTP_SSL("smtp.gmail.com", 465)
         mail_server.ehlo()
         mail_server.login(email, token)
-
-        request = requests.get("http://whatismyip.host/")
-        content = request.content
-        soup = BeautifulSoup(content, "html.parser")
-        element = soup.find("p", {"class": "ipaddress"})
-        public_ip = element.text.strip()
 
         msg = "Your public IP at home is {0}".format(public_ip)
         mail_server.sendmail(from_email, to_email, msg)
