@@ -17,8 +17,8 @@ from_email = args.from_email
 to_email = args.from_email
 token = args.token
 
-from_email_regex = r'[\w_.]+@gmail.com$'
-to_email_regex = r'[\w_.]+@([\w-]+.)+[a-zA-Z]{2,4}$'
+from_email_regex = r'[\w_\.]+@gmail\.com$'
+to_email_regex = r'[\w_\.]+@([\w-]+\.)+[a-zA-Z]{2,4}$'
 
 if not re.match(from_email_regex, from_email):
     print('Invalid from email address. Currently only supporting Gmail.')
